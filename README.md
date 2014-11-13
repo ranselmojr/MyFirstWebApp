@@ -1,4 +1,4 @@
 MyFirstWebApp
 =============
 
-This is my first Google app engine/django Web App
+This is my first Google App Engine/Django Web App

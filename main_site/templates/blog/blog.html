@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+	<div class="pagination" style="margin-top: 20px; margin-left: 35px; ">
+		{% if user.is_staff %}
+    		<li>
+        		<a href="/main/add/">Add Post</a>
+    		</li>
+		{% endif %}
+	</div>
+	<div class="blog-header">
+        <h2 class="blog-title">Welcome to My Blog</h2>
+    </div>
+	<div class="row">
+		<div class="col-sm-8 blog-main">
+			<!-- Next/Prev page links  -->
+        	{% if posts.object_list and posts.paginator.num_pages > 1 %}
+       			<div class="pagination" style="margin-top: 20px; margin-left: 35px; ">
+            		<span class="step-links">
+                	<ul class="pager">
+                		{% if posts.has_previous %}
+                    		<li><a href= "?page={{ posts.previous_page_number }}">Newer Entries </a></li>
+               			{% endif %}
+
+                		<span class="current">
+                    		&nbsp;Page {{ posts.number }} of {{ posts.paginator.num_pages }}
+               			</span>
+
+                		{% if posts.has_next %}
+                   			<li><a href="?page={{ posts.next_page_number }}"> Older Entries</a></li>
+                		{% endif %}
+                	<ul>
+            		</span>
+        		</div>
+        	{% endif %}
+			{% for post in posts.object_list %}
+			<ul>
+				<div class="blog-post">
+					<h3 class="blog-post-title">{{ post.title|title}}</h3>
+					<p class="blog-post-meta">{{ post.timestamp|date:"F d, Y"}}  by <b>{{ post.author}}</b> </p>
+					<p>{{ post.bodytext|safe}} </p>
+					<div class="commentlink"><a href="{% url main_site.views.blogComments post.pk %}">Comments</a></div>
+					<p>___________________________________________________________________</p>
+				</div>
+			</ul>
+			
+			{% endfor %}
+			
+			<!-- Next/Prev page links  -->
+        	{% if posts.object_list and posts.paginator.num_pages > 1 %}
+       			<div class="pagination" style="margin-top: 20px; margin-left: 35px; ">
+            		<span class="step-links">
+            		<ul class="pager">
+                		{% if posts.has_previous %}
+                    		<li><a href= "?page={{ posts.previous_page_number }}">Newer Entries </a></li>
+               			{% endif %}
+
+                		<span class="current">
+                    		&nbsp;Page {{ posts.number }} of {{ posts.paginator.num_pages }}
+               			</span>
+
+                		{% if posts.has_next %}
+                   			<li><a href="?page={{ posts.next_page_number }}"> Older Entries</a></li>
+                		{% endif %}
+                	<ul>
+            		</span>
+        		</div>
+        	{% endif %}
+		</div>
+	</div>
+
+{% endblock %}
+

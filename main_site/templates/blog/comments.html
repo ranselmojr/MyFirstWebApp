@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+	
+	<div class="blog-header">
+        <h2 class="blog-title">Welcome to My Blog</h2>
+    </div>
+	<div class="row">
+		<div class="col-sm-8 blog-main">
+			
+			
+			<ul>
+				<div class="blog-post">
+					<h3 class="blog-post-title">{{ post.title|title}}</h3>
+					<p class="blog-post-meta">{{ post.timestamp|date:"F d, Y"}}, {{ post.timestamp|timesince }}  by <b>{{ post.author}}</b> </p>
+					<p>{{ post.bodytext|safe}} </p><br>
+					<p>__________________________________________________________________</p>
+					
+							
+		<!-- Comments  -->
+{% if comments %}
+    <p>Comments:</p>
+{% endif %}
+
+{% for comment in comments %}
+    <div class="comment">
+        <div class="time">{{ comment.created|timesince }} | <b>{{ comment.author }}</b></div>
+        <div class="body">{{ comment.body|linebreaks }}</div>
+    </div>
+{% endfor %}
+
+<div id="addc"><b>Add a comment</b></div>
+<!-- Comment form  -->
+<form action="{% url main_site.views.add_comment post.id %}" method="POST">{% csrf_token %}
+    <div id="cform">
+        Name: {{ form.author }}
+        <p>{{ form.body|linebreaks }}</p><br>
+    </div>
+    <div id="submit"><input type="submit" value="Submit"></div>
+</form>		
+					
+				</div>
+			</ul>
+	
+
+		</div>
+	
+		
+	</div>
+	
+
+{% endblock %}

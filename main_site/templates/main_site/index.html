@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% if user.is_authenticated %}
+  	
+  	<meta http-equiv="REFRESH" content="0;url={% url main_site.views.displayBlog %}">
+  {% else %}
+  	{% include "main_site/cover.html" %}
+  {% endif %}
+  
+{% endblock %}
